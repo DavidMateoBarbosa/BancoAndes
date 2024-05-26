@@ -1,18 +1,18 @@
 package uniandes.edu.co.application.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Collection;
-
 @Data
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Document("puntos-atencion")
 public class PuntoAtencion {
-    private String tipoAtencion;
-    private String direccion;
-    private Collection<Empleado> empleados;
+    @Id
+    private Integer id;
+    private String tipoPuntoAtencion;
+    private String localizacion;
 }

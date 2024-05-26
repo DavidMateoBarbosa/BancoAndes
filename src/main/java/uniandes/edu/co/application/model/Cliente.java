@@ -1,30 +1,22 @@
 package uniandes.edu.co.application.model;
 
-
-
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Collection;
 
-import lombok.Getter;
-
-import lombok.Setter;
-
-@Document("Cliente")
-@Getter
-@Setter
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document("clientes")
 public class Cliente {
-    private String Tipo_Persona;
-    private String Nombre;
-    private Integer Cedula;
-    public Cliente(String Tipo_Persona,String Nombre,Integer Cedula)
-    {
-        super();
-        this.Tipo_Persona=Tipo_Persona;
-        this.Nombre=Nombre;
-        this.Cedula=Cedula;
-    }
-    
-
+    @Id
+    private Integer id;
+    private String tipoPersona;
+    private String nombre;
+    private String cedula;
+    private Collection<Cuenta> cuentas;
 }

@@ -1,19 +1,23 @@
 package uniandes.edu.co.application.model;
 
-import com.mongodb.lang.Nullable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Collection;
+
 @Data
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Document("empleados")
 public class Empleado {
+    @Id
+    private Integer id;
     private String tipoPersona;
     private String nombre;
     private String cedula;
     private String tipoEmpleado;
-    private Oficina oficina;
+    private Collection<Oficina> oficinas;
 }

@@ -1,32 +1,19 @@
 package uniandes.edu.co.application.model;
 
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import javax.swing.text.Document;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@Document("Cuenta")
-@Getter
-@Setter
+@Data
 public class Cuenta {
-    
-    private String tipo_Cuenta;
-    private String estado_Cuenta;
-    private Integer saldo;
+    @Id
+    private Integer id;
+    private String tipoCuenta;
+    private String estadoCuenta;
+    private Document saldo;
     private LocalDateTime fechaUltimaTransaccion;
-    private Cliente cliente;
-    public Cuenta( String tipo_Cuenta,String estado_Cuenta,Integer saldo,LocalDateTime fechaUltimaTransaccion, Cliente cliente)
-    {
-        super();
-        this.tipo_Cuenta=tipo_Cuenta;
-        this.estado_Cuenta=estado_Cuenta;
-        this.saldo=saldo;
-        this.fechaUltimaTransaccion=fechaUltimaTransaccion;
-        this.cliente=cliente;
-    }
-
-    
-    
+    private Collection<OperacionBancaria> operaciones;
 }
