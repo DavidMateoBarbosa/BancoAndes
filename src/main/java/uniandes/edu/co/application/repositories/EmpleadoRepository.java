@@ -9,7 +9,7 @@ import uniandes.edu.co.application.model.Oficina;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public interface EmpleadoRepository extends MongoRepository<Empleado, String> {
+public interface EmpleadoRepository extends MongoRepository<Empleado, Integer> {
     @Query("{id: ?0}")
     Empleado encontrar(Integer id);
     @Query("{}")
@@ -26,16 +26,9 @@ public interface EmpleadoRepository extends MongoRepository<Empleado, String> {
     }
 
     default void insertarOficina(Integer id, Oficina oficina) {
-        insertarOficina(id, oficina.getId(), oficina.getNombre(), oficina.getDireccion(), oficina.getPuntosAtencionID());
-    }
-    default void insertarOficina(Integer id, Integer oficinaID, String nombre, String direccion) {
-        insertarOficina(id, oficinaID, nombre, direccion, new ArrayList<>());
+        insertarOficina(id, oficina.getId(), oficina.getNombre(), oficina.getDireccion());
     }
     @Query("{id: ?0}")
-    @Update("{$push: {oficinas: {id: ?1, nombre: ?2, direccion: ?3, puntosAtencionID: ?4}}}")
-    void insertarOficina(Integer id, Integer oficinaID, String nombre, String direccion, Collection<Integer> puntosAtencionID);
-
-    @Query("{id: ?0, 'oficinas.id': ?1}")
-    @Update("{$push: {'oficinas.$.puntosAtencionID': ?2}}")
-    void insertarPuntoAtencion(Integer id, Integer oficinaID, Integer puntoAtencionID);
+    @Update("{$push: {id: ?1, nombre: ?2, direccion: ?3}}")
+    void insertarOficina(Integer id, Integer oficinaId, String oficinaNombre, String oficinaDireccion);
 }

@@ -15,4 +15,5 @@ public class PuntoAtencion {
     private Integer id;
     private String tipoPuntoAtencion;
     private String localizacion;
+    private Integer idOficina;
 }

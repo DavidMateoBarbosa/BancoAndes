@@ -3,11 +3,14 @@ package uniandes.edu.co.application.repositories;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.Update;
 
 import uniandes.edu.co.application.model.Cliente;
+import uniandes.edu.co.application.model.Cuenta;
+import uniandes.edu.co.application.model.OperacionBancaria;
 
 public interface ClienteRepository  extends MongoRepository<Cliente, Integer>{
     //Buscar cliente por id
@@ -37,4 +40,20 @@ public interface ClienteRepository  extends MongoRepository<Cliente, Integer>{
     @Query("{id: ?0, 'cuentas.id': ?1}")
     @Update("{$set: {'cuentas.$.estadoCuenta': ?2}}")
     void actualizarEstadoCuenta(String clienteId, String cuentaId, String nuevoEstado);
+
+    //Obtener todas las cuenta
+    @Aggregation(pipeline = {
+            "{ $unwind: '$cuentas' }",
+            "{ $replaceRoot: { newRoot: '$cuentas' } }"
+    })
+    List<Cuenta> findAllCuentas();
+
+
+    //Obtener todas las operacioneBancarias
+    @Aggregation(pipeline = {
+            "{ $unwind: '$cuentas' }",
+            "{ $unwind: '$cuentas.operaciones' }",
+            "{ $replaceRoot: { newRoot: '$cuentas.operaciones' } }"
+    })
+    List<OperacionBancaria> findAllOperacionesCuenta();
 }
